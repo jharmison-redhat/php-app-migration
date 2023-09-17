@@ -3,7 +3,7 @@ FROM registry.access.redhat.com/ubi9/php-81:latest
 
 USER 0
 COPY index.php phpinfo.php /tmp/src/
-COPY tests/app/00-computername.sh /tmp/src/php-pre-start/
+COPY php-pre-start/00-computername.sh /tmp/src/php-pre-start/
 RUN chown -R 1001:0 /tmp/src \
     && sed -e 's/^[;]*\s*clear_env\s*=.*$/clear_env = no/' -i ${PHP_FPM_CONF_D_PATH}/${PHP_FPM_CONF_FILE}
 USER 1001

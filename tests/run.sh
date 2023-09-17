@@ -10,7 +10,7 @@ function cleanup() {
     # Stop everything
     podman stop app &>/dev/null || :
     podman stop database &>/dev/null || :
-    podman network rm php-app-migration &>/dev/null || :
+    podman network rm -f php-app-migration &>/dev/null || :
 }
 trap cleanup EXIT
 
@@ -35,8 +35,7 @@ echo
 # See if app is responding
 ret=0
 if ! curl -s http://localhost:8080 | grep -qF 'You are the visitor number'; then
-    # Dump logs and fail out if not
-    podman logs app
+    echo "App appears broken" >&2
     ret=1
 else
     # Show multiple curls if responding
