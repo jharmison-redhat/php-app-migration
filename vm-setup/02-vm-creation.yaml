@@ -1,0 +1,193 @@
+---
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  labels:
+    app: database
+  name: database
+spec:
+  running: true
+  template:
+    metadata:
+      labels:
+        app: database
+        kubevirt.io/domain: database
+    spec:
+      domain:
+        cpu:
+          cores: 1
+          sockets: 2
+          threads: 1
+        devices:
+          disks:
+          - disk:
+              bus: virtio
+            name: rootdisk
+          interfaces:
+          - masquerade: {}
+            name: default
+        resources:
+          requests:
+            memory: 8Gi
+      evictionStrategy: LiveMigrate
+      networks:
+      - name: default
+        pod: {}
+      volumes:
+      - persistentVolumeClaim:
+          claimName: import-database-datavolume
+        name: rootdisk
+---
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  labels:
+    app: winweb
+  name: winweb01
+spec:
+  running: true
+  template:
+    metadata:
+      labels:
+        app: winweb
+        kubevirt.io/domain: winweb01
+    spec:
+      domain:
+        cpu:
+          cores: 1
+          sockets: 4
+          threads: 1
+        clock:
+          timer:
+            hpet:
+              present: false
+            hyperv: {}
+            pit:
+              tickPolicy: delay
+            rtc:
+              tickPolicy: catchup
+        features:
+          acpi: {}
+          apic: {}
+          hyperv:
+            frequencies: {}
+            ipi: {}
+            relaxed: {}
+            reset: {}
+            runtime: {}
+            spinlocks:
+              spinlocks: 8191
+            synic: {}
+            synictimer:
+              direct: {}
+            tlbflush: {}
+            vapic: {}
+            vpindex: {}
+          smm:
+            enabled: true
+        firmware:
+          bootloader:
+            efi: {}
+        machine:
+          type: pc-q35-rhel8.6.0
+        devices:
+          disks:
+          - disk:
+              bus: sata
+            name: rootdisk
+          interfaces:
+          - masquerade: {}
+            model: e1000e
+            name: default
+          inputs:
+          - name: tablet
+            bus: usb
+            type: tablet
+        resources:
+          requests:
+            memory: 16Gi
+      evictionStrategy: LiveMigrate
+      networks:
+      - name: default
+        pod: {}
+      volumes:
+      - persistentVolumeClaim:
+          claimName: import-winweb01-datavolume
+        name: rootdisk
+---
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  labels:
+    app: winweb
+  name: winweb02
+spec:
+  running: true
+  template:
+    metadata:
+      labels:
+        app: winweb
+        kubevirt.io/domain: winweb02
+    spec:
+      domain:
+        cpu:
+          cores: 1
+          sockets: 4
+          threads: 1
+        clock:
+          timer:
+            hpet:
+              present: false
+            hyperv: {}
+            pit:
+              tickPolicy: delay
+            rtc:
+              tickPolicy: catchup
+        features:
+          acpi: {}
+          apic: {}
+          hyperv:
+            frequencies: {}
+            ipi: {}
+            relaxed: {}
+            reset: {}
+            runtime: {}
+            spinlocks:
+              spinlocks: 8191
+            synic: {}
+            synictimer:
+              direct: {}
+            tlbflush: {}
+            vapic: {}
+            vpindex: {}
+          smm:
+            enabled: true
+        firmware:
+          bootloader:
+            efi: {}
+        machine:
+          type: pc-q35-rhel8.6.0
+        devices:
+          disks:
+          - disk:
+              bus: sata
+            name: rootdisk
+          interfaces:
+          - masquerade: {}
+            model: e1000e
+            name: default
+          inputs:
+          - name: tablet
+            bus: usb
+            type: tablet
+        resources:
+          requests:
+            memory: 16Gi
+      evictionStrategy: LiveMigrate
+      networks:
+      - name: default
+        pod: {}
+      volumes:
+      - persistentVolumeClaim:
+          claimName: import-winweb02-datavolume
+        name: rootdisk

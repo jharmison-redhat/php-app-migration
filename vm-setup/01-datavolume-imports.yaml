@@ -1,0 +1,48 @@
+---
+apiVersion: cdi.kubevirt.io/v1beta1
+kind: DataVolume
+metadata:
+  annotations:
+    cdi.kubevirt.io/storage.deleteAfterCompletion: "false"
+  name: import-database-datavolume
+spec:
+  source:
+    http:
+      url: https://s3.us-east.cloud-object-storage.appdomain.cloud/roadshowocpvirt/database.qcow2
+  storage:
+    resources:
+      requests:
+        storage: 20Gi
+    volumeMode: Block
+---
+apiVersion: cdi.kubevirt.io/v1beta1
+kind: DataVolume
+metadata:
+  name: import-winweb01-datavolume
+  annotations:
+    cdi.kubevirt.io/storage.deleteAfterCompletion: "false"
+spec:
+  source:
+    http:
+      url: https://s3.us-east.cloud-object-storage.appdomain.cloud/roadshowocpvirt/winweb01.qcow2
+  storage:
+    resources:
+      requests:
+        storage: 150Gi
+    volumeMode: Block
+---
+apiVersion: cdi.kubevirt.io/v1beta1
+kind: DataVolume
+metadata:
+  name: import-winweb02-datavolume
+  annotations:
+    cdi.kubevirt.io/storage.deleteAfterCompletion: "false"
+spec:
+  source:
+    http:
+      url: https://s3.us-east.cloud-object-storage.appdomain.cloud/roadshowocpvirt/winweb02.qcow2
+  storage:
+    resources:
+      requests:
+        storage: 150Gi
+    volumeMode: Block

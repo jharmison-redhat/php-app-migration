@@ -1,0 +1,29 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: linweb
+spec:
+  failedBuildsHistoryLimit: 5
+  output:
+    to:
+      kind: ImageStreamTag
+      name: linweb:latest
+  runPolicy: Serial
+  source:
+    contextDir: /
+    git:
+      uri: https://github.com/jharmison-redhat/php-app-migration
+    type: Git
+  strategy:
+    sourceStrategy:
+      env:
+      - name: PHP_CLEAR_ENV
+        value: OFF
+      from:
+        kind: ImageStreamTag
+        name: php:8.0-ubi9
+        namespace: openshift
+    type: Source
+  triggers:
+  - type: ConfigChange
+  successfulBuildsHistoryLimit: 5

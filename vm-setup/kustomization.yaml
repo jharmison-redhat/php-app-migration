@@ -1,0 +1,12 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: vm-modernization
+
+resources:
+- 00-namespace.yaml
+- 01-datavolume-imports.yaml
+- 02-vm-creation.yaml
+- 03-services.yaml
+- 04-route.yaml
