@@ -1,7 +1,0 @@
-FROM registry.redhat.io/rhel8/mariadb-105:latest
-
-ENV MYSQL_USER=visitor \
-    MYSQL_PASSWORD="R3dh4t1!" \
-    MYSQL_DATABASE=visitors
-
-COPY root/ /
