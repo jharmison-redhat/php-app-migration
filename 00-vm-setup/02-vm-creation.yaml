@@ -7,6 +7,21 @@ metadata:
   name: database
 spec:
   running: true
+  dataVolumeTemplates:
+  - apiVersion: cdi.kubevirt.io/v1beta1
+    kind: DataVolume
+    metadata:
+      creationTimestamp: null
+      name: database
+    spec:
+      source:
+        http:
+          url: https://s3.us-east.cloud-object-storage.appdomain.cloud/roadshowocpvirt/database.qcow2
+      storage:
+        resources:
+          requests:
+            storage: 16Gi
+        volumeMode: Block
   template:
     metadata:
       labels:
@@ -34,8 +49,8 @@ spec:
       - name: default
         pod: {}
       volumes:
-      - persistentVolumeClaim:
-          claimName: import-database-datavolume
+      - dataVolume:
+          name: database
         name: rootdisk
 ---
 apiVersion: kubevirt.io/v1
@@ -46,6 +61,21 @@ metadata:
   name: winweb01
 spec:
   running: true
+  dataVolumeTemplates:
+  - apiVersion: cdi.kubevirt.io/v1beta1
+    kind: DataVolume
+    metadata:
+      creationTimestamp: null
+      name: winweb01
+    spec:
+      source:
+        http:
+          url: https://s3.us-east.cloud-object-storage.appdomain.cloud/roadshowocpvirt/winweb01.qcow2
+      storage:
+        resources:
+          requests:
+            storage: 90Gi
+        volumeMode: Block
   template:
     metadata:
       labels:
@@ -111,8 +141,8 @@ spec:
       - name: default
         pod: {}
       volumes:
-      - persistentVolumeClaim:
-          claimName: import-winweb01-datavolume
+      - dataVolume:
+          name: winweb01
         name: rootdisk
 ---
 apiVersion: kubevirt.io/v1
@@ -123,6 +153,21 @@ metadata:
   name: winweb02
 spec:
   running: true
+  dataVolumeTemplates:
+  - apiVersion: cdi.kubevirt.io/v1beta1
+    kind: DataVolume
+    metadata:
+      creationTimestamp: null
+      name: winweb02
+    spec:
+      source:
+        http:
+          url: https://s3.us-east.cloud-object-storage.appdomain.cloud/roadshowocpvirt/winweb02.qcow2
+      storage:
+        resources:
+          requests:
+            storage: 90Gi
+        volumeMode: Block
   template:
     metadata:
       labels:
@@ -188,6 +233,6 @@ spec:
       - name: default
         pod: {}
       volumes:
-      - persistentVolumeClaim:
-          claimName: import-winweb02-datavolume
+      - dataVolume:
+          name: winweb02
         name: rootdisk
