@@ -6,3 +6,7 @@ resources:
   - database.yaml
   - winweb.yaml
   - route.yaml
+  - imagestream.yaml
+  - buildconfig.yaml
+  - php-fpm-conf.yaml
+  - linweb.yaml

@@ -13,4 +13,8 @@ spec:
     kind: Service
     name: winweb
     weight: 100
+  alternateBackends:
+    - kind: Service
+      name: linweb
+      weight: 100
   wildcardPolicy: None
