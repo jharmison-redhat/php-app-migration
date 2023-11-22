@@ -5,3 +5,4 @@ kind: Kustomization
 resources:
   - database.yaml
   - winweb.yaml
+  - route.yaml
