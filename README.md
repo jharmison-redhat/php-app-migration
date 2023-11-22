@@ -18,7 +18,7 @@ Basic Walkthrough
 
 1. Bootstrap OpenShift GitOps (based on ArgoCD) to configure it to point to the repository, deploying an htpasswd identity provider with an appropriate group for ArgoCD configuration as well as three virtual machines to host the application.
     ```sh
-    oc apply -k cluster/bootstrap
+    while ! oc apply --server-side=true --force-conflicts -k cluster/bootstrap ; do sleep 2; done
     ```
 1. Browse to the OpenShift console, open the Virtualization menu on the left, look at Virtual Machines. Change the Project pulldown to `vm-modernization`. Show that the VMs are running in the same state they are after the Migration Toolkit for Virtualization lab in the OCP-V Roadshow. It's as if you just finished walking through that lab, importing the VMs from vSphere.
 1. `curl` the Route exposing the VM-based app to show it's working, maybe curl it a few times to show the load balancing (it puts the VM hostnames in the response)
@@ -26,9 +26,9 @@ Basic Walkthrough
     1. Show the IIS UI in one of the winweb servers
     1. Show the index.php inside this repo being a simple toy example app with some basic database queries
 1. Show what a BuildConfig looks like in OpenShift, maybe just clicking through the GUI to create a new one
-1. Change the branch from `main` to `main+1` via `git checkout main+1` or similar, and rerun the bootstrap on the new branch
+1. Change the branch from `main` to `main+1` via `git checkout main+1` or similar, and rerun the bootstrap on the new branch (without such a forceful application)
     ```sh
-    oc apply -k cluster/bootstrap
+    oc apply --server-side=true -k cluster/bootstrap
     ```
 1. Show the Route and Services and highlight how the Route changed after the second reconciliation
 1. Show in the console that the Build is running from the BuildConfig
