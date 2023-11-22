@@ -12,7 +12,7 @@ spec:
   source:
     path: cluster/applications
     repoURL: https://github.com/jharmison-redhat/php-app-migration.git
-    targetRevision: main+2
+    targetRevision: main+3
   syncPolicy:
     automated:
       prune: true

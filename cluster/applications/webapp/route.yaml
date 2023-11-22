@@ -11,10 +11,6 @@ spec:
     insecureEdgeTerminationPolicy: Redirect
   to:
     kind: Service
-    name: winweb
+    name: linweb
     weight: 100
-  alternateBackends:
-    - kind: Service
-      name: linweb
-      weight: 100
   wildcardPolicy: None
