@@ -3,79 +3,25 @@ apiVersion: kubevirt.io/v1
 kind: VirtualMachine
 metadata:
   labels:
-    app: database
-  name: database
-spec:
-  running: true
-  dataVolumeTemplates:
-  - apiVersion: cdi.kubevirt.io/v1beta1
-    kind: DataVolume
-    metadata:
-      creationTimestamp: null
-      name: database
-    spec:
-      source:
-        http:
-          url: https://s3.us-east.cloud-object-storage.appdomain.cloud/roadshowocpvirt/database.qcow2
-      storage:
-        resources:
-          requests:
-            storage: 16Gi
-        volumeMode: Block
-  template:
-    metadata:
-      labels:
-        app: database
-        kubevirt.io/domain: database
-    spec:
-      domain:
-        cpu:
-          cores: 1
-          sockets: 2
-          threads: 1
-        devices:
-          disks:
-          - disk:
-              bus: virtio
-            name: rootdisk
-          interfaces:
-          - masquerade: {}
-            name: default
-        resources:
-          requests:
-            memory: 8Gi
-      evictionStrategy: LiveMigrate
-      networks:
-      - name: default
-        pod: {}
-      volumes:
-      - dataVolume:
-          name: database
-        name: rootdisk
----
-apiVersion: kubevirt.io/v1
-kind: VirtualMachine
-metadata:
-  labels:
     app: winweb
   name: winweb01
 spec:
   running: true
   dataVolumeTemplates:
-  - apiVersion: cdi.kubevirt.io/v1beta1
-    kind: DataVolume
-    metadata:
-      creationTimestamp: null
-      name: winweb01
-    spec:
-      source:
-        http:
-          url: https://s3.us-east.cloud-object-storage.appdomain.cloud/roadshowocpvirt/winweb01.qcow2
-      storage:
-        resources:
-          requests:
-            storage: 90Gi
-        volumeMode: Block
+    - apiVersion: cdi.kubevirt.io/v1beta1
+      kind: DataVolume
+      metadata:
+        creationTimestamp: null
+        name: winweb01
+      spec:
+        source:
+          http:
+            url: https://s3.us-east.cloud-object-storage.appdomain.cloud/roadshowocpvirt/winweb01.qcow2
+        storage:
+          resources:
+            requests:
+              storage: 90Gi
+          volumeMode: Block
   template:
     metadata:
       labels:
@@ -122,28 +68,28 @@ spec:
           type: pc-q35-rhel8.6.0
         devices:
           disks:
-          - disk:
-              bus: sata
-            name: rootdisk
+            - disk:
+                bus: sata
+              name: rootdisk
           interfaces:
-          - masquerade: {}
-            model: e1000e
-            name: default
+            - masquerade: {}
+              model: e1000e
+              name: default
           inputs:
-          - name: tablet
-            bus: usb
-            type: tablet
+            - name: tablet
+              bus: usb
+              type: tablet
         resources:
           requests:
             memory: 16Gi
       evictionStrategy: LiveMigrate
       networks:
-      - name: default
-        pod: {}
+        - name: default
+          pod: {}
       volumes:
-      - dataVolume:
-          name: winweb01
-        name: rootdisk
+        - dataVolume:
+            name: winweb01
+          name: rootdisk
 ---
 apiVersion: kubevirt.io/v1
 kind: VirtualMachine
@@ -154,20 +100,20 @@ metadata:
 spec:
   running: true
   dataVolumeTemplates:
-  - apiVersion: cdi.kubevirt.io/v1beta1
-    kind: DataVolume
-    metadata:
-      creationTimestamp: null
-      name: winweb02
-    spec:
-      source:
-        http:
-          url: https://s3.us-east.cloud-object-storage.appdomain.cloud/roadshowocpvirt/winweb02.qcow2
-      storage:
-        resources:
-          requests:
-            storage: 90Gi
-        volumeMode: Block
+    - apiVersion: cdi.kubevirt.io/v1beta1
+      kind: DataVolume
+      metadata:
+        creationTimestamp: null
+        name: winweb02
+      spec:
+        source:
+          http:
+            url: https://s3.us-east.cloud-object-storage.appdomain.cloud/roadshowocpvirt/winweb02.qcow2
+        storage:
+          resources:
+            requests:
+              storage: 90Gi
+          volumeMode: Block
   template:
     metadata:
       labels:
@@ -214,25 +160,39 @@ spec:
           type: pc-q35-rhel8.6.0
         devices:
           disks:
-          - disk:
-              bus: sata
-            name: rootdisk
+            - disk:
+                bus: sata
+              name: rootdisk
           interfaces:
-          - masquerade: {}
-            model: e1000e
-            name: default
+            - masquerade: {}
+              model: e1000e
+              name: default
           inputs:
-          - name: tablet
-            bus: usb
-            type: tablet
+            - name: tablet
+              bus: usb
+              type: tablet
         resources:
           requests:
             memory: 16Gi
       evictionStrategy: LiveMigrate
       networks:
-      - name: default
-        pod: {}
+        - name: default
+          pod: {}
       volumes:
-      - dataVolume:
-          name: winweb02
-        name: rootdisk
+        - dataVolume:
+            name: winweb02
+          name: rootdisk
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: winweb
+spec:
+  selector:
+    app: winweb
+  type: ClusterIP
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80

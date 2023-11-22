@@ -1,0 +1,10 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - subscription.yaml
+  - namespace.yaml
+  - rbac.yaml
+  - argocd.yaml
+  - app-of-apps.yaml
