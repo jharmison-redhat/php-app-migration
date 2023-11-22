@@ -5,7 +5,7 @@ metadata:
   name: admin
 identities:
   - htpasswd:admin
-groups: []
+groups: null
 ---
 apiVersion: user.openshift.io/v1
 kind: Group
