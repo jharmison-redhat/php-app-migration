@@ -5,6 +5,8 @@ metadata:
   labels:
     app: winweb
   name: winweb01
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   running: true
   dataVolumeTemplates:
@@ -97,6 +99,8 @@ metadata:
   labels:
     app: winweb
   name: winweb02
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   running: true
   dataVolumeTemplates:
